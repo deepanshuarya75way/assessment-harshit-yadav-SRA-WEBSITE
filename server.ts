@@ -6,9 +6,16 @@ import nodemailer from "nodemailer";
 import { createServer as createViteServer } from "vite";
 import { verifyCouponCode, claimCoupon } from "./api/_lib/rewards";
 import { getSupabase } from "./api/_lib/supabase";
+import referralRoutes from "./server/referrals";
 
+
+app.use(referralRoutes);
+app.use(express.json({limit: "10mb"});)
 const app = express();
 const PORT = 3000;
+
+// const referralService=createReferralService(createJsonFileStore(path.join(process.cwd(),"data","referrals_db.Json"))):
+// app.use(createReferralRouter(referralService));
 
 app.use(express.json({ limit: "10mb" }));
 

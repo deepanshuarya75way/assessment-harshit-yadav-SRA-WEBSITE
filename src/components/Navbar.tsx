@@ -8,9 +8,10 @@ interface NavbarProps {
   onNavigate: (sectionId: string) => void;
   onOpenPortalModal: () => void;
   onOpenRewardsModal?: () => void;
+  OnOpenReferralModal?:()=>void;
 }
 
-export default function Navbar({ currentLang, setLang, onNavigate, onOpenPortalModal, onOpenRewardsModal }: NavbarProps) {
+export default function Navbar({ currentLang, setLang, onNavigate, onOpenPortalModal, onOpenRewardsModal,  OnOpenReferralModal}:NavbarProps){
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [langDropdownOpen, setLangDropdownOpen] = useState(false);
@@ -323,6 +324,15 @@ export default function Navbar({ currentLang, setLang, onNavigate, onOpenPortalM
               </button>
             )}
 
+            { OnOpenReferralModal && ( <button
+            onClick={onOpenReferralModal}
+            className="flex items-center gap-1.5 bg-brand-green hover:bg-brand-green/90 text-white text-sm font-semi"
+            id="header-referral-btn"
+            >
+              <user className="h-4 w-4"/>
+              <span>refer &amp; earn 50%</span>
+              </button>
+            )}
             {/* Dealer Login Action */}
             <button
               onClick={onOpenPortalModal}
@@ -454,6 +464,19 @@ export default function Navbar({ currentLang, setLang, onNavigate, onOpenPortalM
             <button
               onClick={() => {
                 setMobileMenuOpen(false);
+                {onOpenReferralModal && (
+                  <button
+                  onClick={()=>{ setMobileMenuOpen(false);
+                    onOpenReferralModal();
+                  }}
+                   className="flex items-center gap-1.5 bg-gradient-to-r from-amber-700 to-amber-70 hover:from-amber-600 hover:to-amber-700 text-gray-950 font-extrabold text-xs px-3.5 py-2 rounded-xl transition-all shadow-[0_4px_12px_rgba(245,158,11,0.25)] border border-amber-300/40 cursor-pointer"
+              >
+     <Users      className="h-4 w-4 text-gray-950 animate-bounce" />
+                <span>refer and earn 50%off</span>
+              </button>
+            )}
+
+            
                 onOpenPortalModal();
               }}
               className="w-full flex items-center justify-center gap-2 bg-brand-green text-white font-bold py-3.5 rounded-xl text-md shadow-lg shadow-brand-green/20"

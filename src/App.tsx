@@ -13,6 +13,8 @@ import StorySections from './components/StorySections';
 import FarmerReviews from './components/FarmerReviews';
 import Portals from './components/Portals';
 import RewardsPortalModal from './components/RewardsPortalModal';
+
+import ReferralModalProps from './components/RewardsPortalModal';
 import AIAssistantWidget from './components/AIAssistantWidget';
 import { Leaf, Phone, Mail, MapPin, Globe } from 'lucide-react';
 import { PRODUCTS } from './data';
@@ -22,6 +24,8 @@ export default function App() {
   const [currentLang, setCurrentLang] = useState<'English' | 'Hindi' | 'Punjabi'>('English');
   const [isPortalOpen, setIsPortalOpen] = useState(false);
   const [isRewardsOpen, setIsRewardsOpen] = useState(false);
+  const [isReferralOpen,setIsReferralOpen]=useState(false);
+  const [initialReferralCode,SetInitialReferralCode]=useState<String>("");
   const [initialCouponCode, setInitialCouponCode] = useState<string>('');
   
   // Lifted state for crop categories slider & video integration
@@ -34,6 +38,12 @@ export default function App() {
       try {
         const urlParams = new URLSearchParams(window.location.search);
         const hash = window.location.hash;
+        const referralCode = urlParams.Get('ref') ||";
+
+        if (referralCode || hash==='refer'){
+          setinitialReferralCode(referralCode.trim().toUpperCase();
+          setIsReferralOpen(True);
+        }
         const code = urlParams.get('code') || urlParams.get('coupon') || urlParams.get('redeem') || '';
         
         if (
@@ -85,6 +95,7 @@ export default function App() {
               }}
               onOpenPortalModal={() => setIsPortalOpen(true)}
               onOpenRewardsModal={() => setIsRewardsOpen(true)}
+              onOpenReferralModal={()=>setIsReferralOpen(True)}
             />
 
             {/* Cinematic Narrative Hero Banner */}
@@ -242,7 +253,11 @@ export default function App() {
               }}
               initialCode={initialCouponCode}
             />
-
+            <referralModal
+            isOpen={isReferralOpen}
+            onClose={()=>setIsReferralOpen(false)}
+            initialReferralCode={initialReferralCode}
+            />
             {/* Floating AI Assistant Widget (aside in right down) */}
             <AIAssistantWidget currentLang={currentLang} />
 
